@@ -8,7 +8,6 @@ import com.example.demo.user.domain.UserUpdate;
 import com.example.demo.user.infrastructure.UserEntity;
 import com.example.demo.user.infrastructure.UserRepository;
 import java.time.Clock;
-import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
@@ -23,22 +22,19 @@ public class UserService {
     private final UserRepository userRepository;
     private final JavaMailSender mailSender;
 
-    public Optional<UserEntity> getById(long id) {
-        return userRepository.findByIdAndStatus(id, UserStatus.ACTIVE);
-    }
 
-    public UserEntity getByEmail(String email) {
+    public UserEntity findByEmail(String email) {
         return userRepository.findByEmailAndStatus(email, UserStatus.ACTIVE)
             .orElseThrow(() -> new ResourceNotFoundException("Users", email));
     }
 
-    public UserEntity getByIdOrElseThrow(long id) {
+    public UserEntity findByIdOrElseThrow(long id) {
         return userRepository.findByIdAndStatus(id, UserStatus.ACTIVE)
             .orElseThrow(() -> new ResourceNotFoundException("Users", id));
     }
 
     @Transactional
-    public UserEntity createUser(UserCreate userCreate) {
+    public UserEntity create(UserCreate userCreate) {
         UserEntity userEntity = new UserEntity();
         userEntity.setEmail(userCreate.getEmail());
         userEntity.setNickname(userCreate.getNickname());
@@ -52,8 +48,8 @@ public class UserService {
     }
 
     @Transactional
-    public UserEntity updateUser(long id, UserUpdate userUpdate) {
-        UserEntity userEntity = getByIdOrElseThrow(id);
+    public UserEntity update(long id, UserUpdate userUpdate) {
+        UserEntity userEntity = findByIdOrElseThrow(id);
         userEntity.setNickname(userUpdate.getNickname());
         userEntity.setAddress(userUpdate.getAddress());
         userEntity = userRepository.save(userEntity);
