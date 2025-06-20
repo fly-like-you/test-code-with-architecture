@@ -8,11 +8,13 @@ import com.example.demo.user.domain.UserCreate;
 import com.example.demo.user.domain.UserStatus;
 import com.example.demo.user.domain.UserUpdate;
 import com.example.demo.user.service.port.UserRepository;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Builder
 @RequiredArgsConstructor
 public class UserService {
 
@@ -59,7 +61,7 @@ public class UserService {
     @Transactional
     public void verifyEmail(long id, String certificationCode) {
         User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Users", id));
-        user.certificate(certificationCode);
+        user = user.certificate(certificationCode);
         userRepository.save(user);
     }
 
