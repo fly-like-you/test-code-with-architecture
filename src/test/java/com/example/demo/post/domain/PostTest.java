@@ -35,4 +35,25 @@ class PostTest {
         assertThat(post.getWriter().getAddress()).isEqualTo("Seoul");
         assertThat(post.getWriter().getStatus()).isEqualTo(UserStatus.PENDING);
     }
+
+    @Test
+    void PostUpdate로_게시물을_수정할_수_있다() {
+        // given
+        Post post = Post.builder()
+                .id(1L)
+                .content("기존 게시물 내용")
+                .writer(User.builder()
+                        .email("")
+                        .build())
+                .build();
+        PostUpdate postUpdate = PostUpdate.builder()
+                        .content("수정 게시물 내용")
+                        .build();
+
+        post = post.update(postUpdate);
+        assertThat(post.getContent()).isEqualTo("수정 게시물 내용");
+
+
+    }
+
 }
