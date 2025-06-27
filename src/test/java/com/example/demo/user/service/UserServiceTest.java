@@ -16,18 +16,18 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 public class UserServiceTest {
 
-    private UserService userService;
+    private UserServiceImpl userService;
 
     // 테스트 전에 userService를 초기화합니다. (Test Fixture)
     @BeforeEach
     void init() {
         FakeMailSender fakeMailSender = new FakeMailSender();
         FakeUserRepository fakeUserRepository = new FakeUserRepository();
-        this.userService = UserService.builder()
+        this.userService = UserServiceImpl.builder()
                 .clockHolder(new TestClockHolder(123123123L))
                 .uuidHolder(new TestUuidHolder("asdasdasdasd"))
                 .userRepository(fakeUserRepository)
-                .certificationService(new CertificationService(fakeMailSender))
+                .certificationService(new CertificationServiceImpl(fakeMailSender))
                 .build();
 
 

@@ -1,24 +1,24 @@
 package com.example.demo.post.service;
 
 import com.example.demo.common.domain.exception.ResourceNotFoundException;
+import com.example.demo.post.controller.port.PostService;
 import com.example.demo.post.domain.Post;
 import com.example.demo.post.domain.PostCreate;
 import com.example.demo.post.domain.PostUpdate;
-import com.example.demo.post.infrastructure.PostJpaRepository;
 import com.example.demo.post.service.port.PostRepository;
 import com.example.demo.user.domain.User;
-import com.example.demo.user.infrastructure.UserEntity;
-import com.example.demo.user.service.UserService;
-import java.time.Clock;
+import com.example.demo.user.service.UserServiceImpl;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@Builder
 @RequiredArgsConstructor
-public class PostService {
+public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
     public Post findPostById(long id) {
         return postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Posts", id));

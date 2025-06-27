@@ -1,15 +1,12 @@
 package com.example.demo.post.domain;
 
-import com.example.demo.post.service.PostService;
 import com.example.demo.user.domain.User;
 import com.example.demo.user.domain.UserStatus;
 import org.junit.jupiter.api.Test;
 
-import java.time.Clock;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class PostTest {
     @Test
